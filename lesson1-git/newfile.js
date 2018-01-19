@@ -1,1 +1,0 @@
-var nour =  "hello world!"
