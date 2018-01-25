@@ -13,7 +13,7 @@ function Todo(descciptionofobject) {
       add two values to the class: this.description which should be set equal to the description passed to the class, and 
       this.complete which should be set to false. 
   */
-  this.description = descciptionofobject;
+  this.desc = descciptionofobject;
   this.complete = false;
 
 }
@@ -22,7 +22,7 @@ function Todo(descciptionofobject) {
 /* STEP 3: Add a completeTodo method to the prototype of Todo. It will not take any arguemnts. Inside the function set the
            Todo's complete to true*/
 
-Todo.prototype.completeTodo = function () {
+Todo.prototype.completeToDo = function () {
   return this.complete = true;
 }
 
