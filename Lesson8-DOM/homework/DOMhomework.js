@@ -3,50 +3,77 @@
            add your name to the end of the current innerHTML*/
 
 //Uncomment and add your code:
-// let created = document.querySelector(/* Your Code here */);
+let created = document.querySelector("#createdBy").innerHTML = "This app was created by: Nour Hassan"
 
-function Todo(){
+function Todo(param) {
 
-/* 
-  STEP 2: Create a class constructor called 'Todo' this function should take one argument, the description of the todo.
-    add two values to the class: this.description which should be set equal to the description passed to the class, and 
-    this.complete which should be set to false. 
-*/
+  /* 
+    STEP 2: Create a class constructor called 'Todo' this function should take one argument, the description of the todo.
+      add two values to the class: this.description which should be set equal to the description passed to the class, and 
+      this.complete which should be set to false. 
+  */
+ 
 
+    this.description = param;
+    this.complete = false;
+  
 }
 
 /* STEP 3: Add a completeTodo method to the prototype of Todo. It will not take any arguemnts. Inside the function set the
            Todo's complete to true*/
-
+Todo.prototype.completeTodo = function () {
+  return this.complete = true;
+};
 /* STEP 4: initiate an array called 'toDoItems'. In this array you should have one new object of the class Todo. */
-let toDoItems;
+var whatToDo = new Todo();
+let toDoItems = [];
+toDoItems.push(whatToDo);
 
 
-function buildTodo() {
-/*
-  STEP 5: This function, buildTodo, will take an object of class Todo as it's first argument and 
-          a numerical index as it's second.
-           
-          Inside this function should:
-            1.) Create a new 'div' element. Set this to a variable 'todoShell'
-            2.) Give todoShell a class of 'todoShell'.
-              
-            3.) Create a new 'span' element. Set this to a variable 'todoText'
-            4.) Using the item passed in, set the todoText innerHTML to the value of 'description'.
-            5.) Set the id of todoText to the value passed pby the index argument.
-            6.) Using an if statement, check to see if the 'complete' value on the object passed as the first argument 
-                  is true. If it is, give todoText a class of 'completeText'. If it is not, do not giv eit a class.
-            7.) Append child todoText to todoShell
-            8.) return todoShell
-*/
+function buildTodo(todoObject,param2) {
+  /*
+    STEP 5: This function, buildTodo, will take an object of class Todo as it's first argument and 
+            a numerical index as it's second.
+             
+            Inside this function should:
+              1.) Create a new 'div' element. Set this to a variable 'todoShell'
+              2.) Give todoShell a class of 'todoShell'.
+                
+              3.) Create a new 'span' element. Set this to a variable 'todoText'
+              4.) Using the item passed in, set the todoText innerHTML to the value of 'description'.
+              5.) Set the id of todoText to the value passed pby the index argument.
+              6.) Using an if statement, check to see if the 'complete' value on the object passed as the first argument 
+                    is true. If it is, give todoText a class of 'completeText'. If it is not, do not giv eit a class.
+              7.) Append child todoText to todoShell
+              8.) return todoShell
+  */
+
+  var todoShell = document.createElement("div");
+  todoShell.setAttribute("class", "todoShell");
+  var todoText = document.createElement("span");
+  todoText.innerHTML = todoObject;
+  todoText.setAttribute("id", param2);
+  if(todoObject.complete){
+    todoText.setAttribute("class", "completeText");
+ 
+  }
+  todoShell.appendChild(todoText);
+
+  return todoShell;
+  
+
 }
 
-function buildTodos() {
+function buildTodos(todoObject) {
   /* 
   STEP 6: This function will build and return an array of todo element. It will take an array of objects of the Todo class as it's only argument.
           Using the map method on the array passed in, use the 'buildTodo' function as the callback passed to map. 
           Return the new mapped array.
+
   */
+  var newToDo = todoObject.map(buildTodo);
+  return newToDo;
+  
 }
 
 function displayTodos() {
@@ -62,6 +89,17 @@ function displayTodos() {
 
             You can now load your html file in your broswer and see your work so far.
   */
+
+  var cont = document.getElementById('todoContainer').innerHTML = "";
+  var result = buildTodos(toDoItems);
+
+  for (i = 0; i <= result.length; i += 2) { 
+      cont += result[i];
+  }
+  
+return cont;
+
+
 }
 
 
@@ -69,20 +107,24 @@ function displayTodos() {
 
 
 function addTodo() {
-                     /* 
-    STEP 8: This function, 'addTodo' will add a new Todo to the array of todos.
-            NOTE: We have not learned about input HTML elements yet, so we will give you a little more code to go on here.
-            'newTodo' is an text input element. All text input elements have a property called 'value', this value will be whatever is typed into 
-            the text box on the page.
-  
-            1.) Using the value property on newTodo, create an new Todo object and pass the value as the description.
-            2.) add the object from (1) into the toDoItems array.
-            3.) Set the value of newTodo to an empty string (this will clear the text in the box allowing the user to enter another item).
-            4.) Call displayTodos to refresh the todos displayed
-  */
+  /* 
+STEP 8: This function, 'addTodo' will add a new Todo to the array of todos.
+NOTE: We have not learned about input HTML elements yet, so we will give you a little more code to go on here.
+'newTodo' is an text input element. All text input elements have a property called 'value', this value will be whatever is typed into 
+the text box on the page.
+ 
+1.) Using the value property on newTodo, create an new Todo object and pass the value as the description.
+2.) add the object from (1) into the toDoItems array.
+3.) Set the value of newTodo to an empty string (this will clear the text in the box allowing the user to enter another item).
+4.) Call displayTodos to refresh the todos displayed
+*/
 
   //UNCOMMENT THE NEXT LINE
-  // let newTodo = document.querySelector('#todoInput');
+   let newTodo = document.querySelector('#todoInput');
+   var whatsToDo = new Todo(newTodo.value);
+   toDoItems.push(whatsToDo);
+   newTodo="";
+   displayTodos();
 }
 
 /* 
@@ -93,7 +135,9 @@ function addTodo() {
 */
 
 //UNCOMMENT THE NEXT LINE
-// let button;
+var myButton = document.getElementById('addButton');
+myButton.addEventListener("click",addTodo());
+let button;
 
 
 
@@ -111,7 +155,8 @@ function completeTodo(event) {
             3.) In the buildTodo function add a 'click' event listener to the 'todoText' element, and pass this function as the callback.
   */
   //UNCOMMENT THE NEXT LINE
-  // let index = event.target.id;
+   let index = event.target.id;
+
 }
 
 /* STEP 11: Make sure ALL tests pass */
@@ -130,7 +175,7 @@ function completeTodo(event) {
 // ********************************************** ----------- ********************************************** //
 
 
-
+displayTodos();
 // Call displayTodos here <-----
 // ---------------------------- DO NOT CHANGE ANY CODE BELOW THIS LINE ----------------------------- //
 if (typeof module !== 'undefined') {
