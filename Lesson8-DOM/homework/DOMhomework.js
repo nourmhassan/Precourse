@@ -27,6 +27,8 @@ Todo.prototype.completeToDo = function () {
 }
 
 let toDoItems = [];
+var someToDo = new Todo("walk the dog");
+toDoItems.push(someToDo);
 
 
 function buildTodo(param1, param2) {
